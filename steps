@@ -1,0 +1,27 @@
+vncserver
+vncserver -kill :1
+vi ~/.vnc/xstartup
+  add these lines:
+  #!/bin/sh
+  unset SESSION_MANAGER
+  unset DBUS_SESSION_BUS_ADDRESS
+  exec startxfce4
+
+chmod u+x ~/.vnc/xstartup
+
+vi ~/.vnc/config
+  add these lins
+  geometry=1920x1080
+  dpi=96 
+
+vi /etc/systemd/system/vncserver@.service
+  add User=<your user name>
+
+sudo systemctl daemon-reload
+sudo systemctl enable vncserver@1.service
+sudo systemctl start vncserver@1.service
+sudo systemctl status vncserver@1.service
+
+from your machine run:
+ssh -L 5901:127.0.0.1:5901 -N -f -l username server_ip_address
+
